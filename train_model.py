@@ -147,11 +147,11 @@ def train(df: pd.DataFrame):
     print("  Preprocessing reviews …")
     df['clean_review'] = df['review'].apply(clean_text)
     df = df[df['clean_review'].str.strip() != ''].copy()
+    X = df['clean_review'].astype(str).to_numpy()
+    y = df['sentiment'].astype(str).to_numpy()
+    # Add these lines right before train_test_split X_clean X.to_numpy() if hasattr(X, 'to_numpy') y_clean y.to_numpy() if hasattr(y, 'to_numpy')
 
-    X = df['clean_review'].values
-    y = df['sentiment'].values
-
-    # ── Train / Test split (80 / 20, stratified) ─────────────────────────
+──────────────────────
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.20, random_state=42, stratify=y
     )
