@@ -590,10 +590,11 @@ def load_data():
     return df
 
 
-@st.cache_resource(show_spinner=False)
 def load_ml_model():
-    """Load (or train) the ML model — cached so it only runs once."""
-    return get_model()
+    """Load (or train) the ML model."""
+    if "ml_model" not in st.session_state:
+        st.session_state["ml_model"] = get_model()
+    return st.session_state["ml_model"]
 
 
 # ════════════════════════════════════════════════════════════════════════════
