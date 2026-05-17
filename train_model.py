@@ -88,12 +88,12 @@ def train(df):
     X_test_tfidf  = vectorizer.transform(X_test)
 
     model = LogisticRegression(
-        C=1.5,
-        max_iter=1000,
-        solver="lbfgs",
-        multi_class="multinomial",
-        random_state=42,
-        class_weight="balanced",
+    C=1.5,
+    max_iter=1000,
+    solver="lbfgs",
+    random_state=42,
+    class_weight="balanced",
+    )
     )
     model.fit(X_train_tfidf, y_train)
 
