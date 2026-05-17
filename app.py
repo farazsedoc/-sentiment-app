@@ -1,4 +1,4 @@
-"""
+ñ"""
 app.py
 ======
 Main entry point for the Sentiment Analysis Dashboard.
@@ -828,9 +828,7 @@ def chart_sentiment_bar(df: pd.DataFrame):
     fig.update_layout(**PLOTLY_LAYOUT, title="Review Count by Sentiment", height=320,
                       bargap=0.45)
     return fig
-
-
-def chart_sentiment_over_time(df: pd.DataFrame):
+def chart_sentiment_over_time(df):
     if 'date' not in df.columns:
         return None
     df2 = df.copy()
@@ -839,6 +837,11 @@ def chart_sentiment_over_time(df: pd.DataFrame):
     pivot = df2.groupby(['week', 'sentiment']).size().unstack(fill_value=0).reset_index()
 
     fig = go.Figure()
+    fill_colors = {
+        'positive': 'rgba(0,255,135,0.07)',
+        'negative': 'rgba(255,77,109,0.07)',
+        'neutral' : 'rgba(255,230,0,0.07)',
+    }
     for sent, color in SENTIMENT_COLORS.items():
         if sent in pivot.columns:
             fig.add_trace(go.Scatter(
@@ -849,13 +852,15 @@ def chart_sentiment_over_time(df: pd.DataFrame):
                 line = dict(color=color, width=2.5),
                 marker = dict(size=6, color=color),
                 fill = 'tozeroy',
-                fillcolor = color.replace(')', ',0.07)').replace('rgb', 'rgba') if 'rgb' in color else color + '12',
-                hovertemplate = f"<b>{sent.title()}</b><br>Week: %{{x|%b %d}}<br>Count: %{{y}}<extra></extra>",
+                fillcolor = fill_colors[sent],
+                hovertemplate = f"<b>{sent.title()}</b><br>Count: %{{y}}<extra></extra>",
             ))
 
-    fig.update_layout(**PLOTLY_LAYOUT, title="Sentiment Trend Over Time", height=320,
-                      hovermode='x unified')
+    fig.update_layout(**PLOTLY_LAYOUT, title="Sentiment Trend Over Time",
+                      height=320, hovermode='x unified')
     return fig
+
+
 
 
 def chart_rating_distribution(df: pd.DataFrame):
