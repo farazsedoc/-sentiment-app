@@ -1,4 +1,4 @@
-ñ"""
+"""
 app.py
 ======
 Main entry point for the Sentiment Analysis Dashboard.
